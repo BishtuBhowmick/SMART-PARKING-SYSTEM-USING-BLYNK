@@ -1,0 +1,67 @@
+#define BLYNK_TEMPLATE_ID "TMPL39X5HlQKm"
+#define BLYNK_TEMPLATE_NAME "Smart Parking"
+#define BLYNK_AUTH_TOKEN "1HljjG097L-_WVQ1SLLj5rkQQ-N0taws"
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+
+// WiFi credentials
+char ssid[] = "realme 7 pro";
+char pass[] = "debarpan";
+
+// Blynk authentication token
+char auth[] = "1HljjG097L-_WVQ1SLLj5rkQQ-N0taws";
+
+// Pin configurations
+#define IR_SENSOR_PIN D1 // Digital pin connected to IR sensor
+#define PARKING_STATUS_LED V1 // Virtual pin for indicating parking status (LED widget in Blynk)
+
+// Global variable to store parking status
+bool isParkingOccupied = false;
+
+void setup() {
+  // Debug console
+  Serial.begin(115200);
+
+  // Connect to WiFi
+  WiFi.begin(ssid, pass);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("WiFi connected");
+
+  // Initialize Blynk
+  Blynk.begin(auth, ssid, pass);
+
+  // Set IR sensor pin mode
+  pinMode(IR_SENSOR_PIN, INPUT);
+
+  // Setup Blynk virtual pins
+  Blynk.virtualWrite(PARKING_STATUS_LED, isParkingOccupied ? 255 : 0); // Turn LED widget on/off based on parking status
+}
+
+void loop() {
+  Blynk.run();
+
+  // Read IR sensor input
+  int irSensorValue = digitalRead(IR_SENSOR_PIN);
+
+  // Update parking status
+  if (irSensorValue == HIGH) {
+    // Parking occupied
+    if (!isParkingOccupied) {
+      isParkingOccupied = true;
+      Blynk.virtualWrite(PARKING_STATUS_LED, 255); // Turn LED widget on
+      Serial.println("Parking Occupied");
+    }
+  } else {
+    // Parking vacant
+    if (isParkingOccupied) {
+      isParkingOccupied = false;
+      Blynk.virtualWrite(PARKING_STATUS_LED, 0); // Turn LED widget off
+      Serial.println("Parking Vacant");
+    }
+  }
+
+  delay(100); // Delay for stability
+}
