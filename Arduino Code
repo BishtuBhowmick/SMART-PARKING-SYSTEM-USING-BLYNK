@@ -5,8 +5,8 @@
 #include <BlynkSimpleEsp8266.h>
 
 // WiFi credentials
-char ssid[] = "realme 7 pro";
-char pass[] = "debarpan";
+char ssid[] = "password";
+char pass[] = "arpan";
 
 // Blynk authentication token
 char auth[] = "1HljjG097L-_WVQ1SLLj5rkQQ-N0taws";
