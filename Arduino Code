@@ -1,12 +1,12 @@
 #define BLYNK_TEMPLATE_ID "TMPL39X5HlQKm"
-#define BLYNK_TEMPLATE_NAME "Smart Parking"
+#define BLYNK_TEMPLATE_NAME "Smart Parking system"
 #define BLYNK_AUTH_TOKEN "1HljjG097L-_WVQ1SLLj5rkQQ-N0taws"
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
 
 // WiFi credentials
-char ssid[] = "password";
-char pass[] = "arpan";
+char ssid[] = "poco m2 pro";
+char pass[] = "bishtu";
 
 // Blynk authentication token
 char auth[] = "1HljjG097L-_WVQ1SLLj5rkQQ-N0taws";
